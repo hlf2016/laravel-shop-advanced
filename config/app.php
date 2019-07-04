@@ -104,9 +104,10 @@ return [
     | data for your database seeds. For example, this will be used to get
     | localized telephone numbers, street address information and more.
     |
+    | factory 工厂文件会使用 faker 来自动生成字段的内容，而默认情况下生成的数据都是是英文的，我们需要修改成中文
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'zh_CN',
 
     /*
     |--------------------------------------------------------------------------
