@@ -7,6 +7,7 @@
 /public/css
 /.idea
 /public/mix-manifest.json
+/public/vendor/laravel-admin
 .env
 .phpunit.result.cache
 Homestead.json
