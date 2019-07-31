@@ -16,6 +16,6 @@ Route::group([
     $router->get('products/create', 'ProductsController@create');
     $router->post('products', 'ProductsController@store');
     $router->get('products/{id}/edit', 'ProductsController@edit');
-    $router->put('products/{id}', 'ProductsController@supdate');
+    $router->put('products/{id}', 'ProductsController@update');
 
 });
