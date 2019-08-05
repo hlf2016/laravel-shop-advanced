@@ -33,4 +33,6 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
     // 取消收藏商品
     Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+    // 我的收藏页面
+    Route::get('favorites', 'ProductsController@favorites')->name('products.favorites');
 });
