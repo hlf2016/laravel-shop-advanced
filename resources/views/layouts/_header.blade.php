@@ -41,6 +41,9 @@
                             <a class="dropdown-item" href="{{ route('cart.index') }}">
                                 我的购物车
                             </a>
+                            <a class="dropdown-item" href="{{ route('orders.index') }}">
+                                订单中心
+                            </a>
                             <a class="dropdown-item" id="logout" href="#"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 <form id="logout-form" method="POST" action="{{ route('logout') }}"
