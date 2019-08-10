@@ -24,6 +24,14 @@ class OrdersController extends Controller
         return view('orders.index', ['orders' => $orders]);
     }
 
+    public function show(Order $order, Request $request)
+    {
+        $this->authorize('own', $order);
+        // load 与之前使用的with 功能都是一样的，用于数据的预加载，成为'延迟预加载'。
+        // 不同的是，load()是在已经查询出来的模型上调用，而with()是在ORM查询构造器上使用。
+        return view('orders.show', ['order' => $order->load(['items.product', 'items.productSku'])]);
+    }
+
     public function store(OrderRequest $request)
     {
         $user = $request->user();
