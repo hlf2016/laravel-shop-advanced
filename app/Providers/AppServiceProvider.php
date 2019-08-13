@@ -18,6 +18,11 @@ class AppServiceProvider extends ServiceProvider
         // 往服务器中注入一个AliPay的单例对象
         $this->app->singleton('alipay', function () {
             $config = config('pay.alipay');
+            // alipay 的服务端回调地址
+            $config['notify_url'] = 'http://requestbin.net/r/usis1uus';
+            // $config['notify_url'] = route('payment.alipay.notify');
+            // alipay 的前端回调地址
+            $config['return_url'] = route('payment.alipay.return');
             // 判断当前项目运行环境是否为线上环境
             if (app()->environment() !== 'production') {
                 $config['mode'] = 'dev';
