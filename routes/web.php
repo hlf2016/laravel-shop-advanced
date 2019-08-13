@@ -50,7 +50,11 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::get('payment/{order}/alipay', 'PaymentController@payByAlipay')->name('payment.alipay');
     // 支付宝前端回调,需要auth认证
     Route::get('payment/alipay/return', 'PaymentController@alipayReturn')->name('payment.alipay.return');
+    // 微信支付
+    Route::get('payment/{order}/wechat_pay', 'PaymentController@payByWechat')->name('payment.wechat');
 });
 // 支付宝后端回调
 // 服务器端回调的路由不能放到带有 auth 中间件的路由组中，因为支付宝的服务器请求不会带有认证信息。
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
+// 微信支付回调
+Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');

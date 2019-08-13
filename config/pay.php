@@ -10,11 +10,13 @@ return [
         ]
     ],
     'wechat' => [
-        'app_id'      => '',
-        'mch_id'      => '',
-        'key'         => '',
-        'cert_client' => '',
-        'cert_key'    => '',
+        'app_id'      => '公众号 app id',
+        'mch_id'      => '第一步获取到的商户号',
+        // 密钥可以通过 http://www.unit-conversion.info/texttools/random-string-generator/ 生成
+        // Length 那个框填入 32 然后点击 Generate 按钮，下方的 Output 就会出现一个 32 个字符的随机字符串，把这个字符串复制下来。
+        'key'         => '刚刚设置的 API 密钥',
+        'cert_client' => resource_path('wechat_pay/apiclient_cert.pem'),
+        'cert_key'    => resource_path('wechat_pay/apiclient_key.pem'),
         'log'         => [
             'file' => storage_path('logs/wechat_pay.log')
         ]
