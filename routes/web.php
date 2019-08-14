@@ -46,6 +46,8 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::get('orders', 'OrdersController@index')->name('orders.index');
     // 订单详情
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
+    // 订单改为收货状态
+    Route::post('orders/{order}/received', 'OrdersController@received')->name('orders.received');
     // 支付宝支付
     Route::get('payment/{order}/alipay', 'PaymentController@payByAlipay')->name('payment.alipay');
     // 支付宝前端回调,需要auth认证
