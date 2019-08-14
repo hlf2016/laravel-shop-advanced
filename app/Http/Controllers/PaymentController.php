@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderPaid;
 use Endroid\QrCode\QrCode;
 use App\Models\Order;
 use App\Exceptions\InvalidRequestException;
@@ -64,7 +65,7 @@ class PaymentController extends Controller
             'payment_method' => 'alipay',
             'payment_no' => $data->trade_no
         ]);
-
+        $this->afterPaid($order);
         return app('alipay')->success();
     }
 
@@ -111,6 +112,13 @@ class PaymentController extends Controller
             'payment_method' => 'wechat',
             'payment_no' => $data->transaction_id
         ]);
+        $this->afterPaid($order);
         return app('wechat_pay')->success();
+    }
+
+    // 支付成功事件
+    protected function afterPaid(Order $order)
+    {
+        event(new OrderPaid($order));
     }
 }
