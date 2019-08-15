@@ -8,7 +8,8 @@ use App\Events\OrderReviewed;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UpdateProductRating
+// 实现ShouldQueue 代表此任务异步执行
+class UpdateProductRating implements ShouldQueue
 {
     /**
      * Create the event listener.
