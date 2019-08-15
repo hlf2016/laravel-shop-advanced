@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApplyRefundRequest;
 use App\Events\OrderReviewed;
 use Carbon\Carbon;
 use App\Http\Requests\SendReviewRequest;
@@ -96,5 +97,27 @@ class OrdersController extends Controller
             }
         });
         return redirect()->back();
+    }
+
+    // 申请退款
+    public function applyRefund(Order $order, ApplyRefundRequest $request)
+    {
+        $this->authorize('own', $order);
+        if(!$order->paid_at) {
+            throw new InvalidRequestException('订单未支付，无法申请退款');
+        }
+        if($order->refund_status !== Order::REFUND_STATUS_PENDING) {
+            throw new InvalidRequestException('订单已申请退款，无需重复申请');
+        }
+        // 将用户输入的退款理由放到订单的 extra 字段中
+        $extra = $order->extra ? : [];
+        $extra['refund_reason'] = $request->input('reason');
+
+        // 将订单退款状态改为已申请退款
+        $order->update([
+            'refund_status' => Order::REFUND_STATUS_APPLIED,
+            'extra' => $extra
+        ]);
+        return $order;
     }
 }
