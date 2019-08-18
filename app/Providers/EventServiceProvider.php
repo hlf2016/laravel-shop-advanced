@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\OrderRefundSuccess;
 use App\Events\OrderReviewed;
-use App\Listeners\UpdateProductRating;
 use App\Events\OrderPaid;
+use App\Listeners\SendRefundSuccessMail;
+use App\Listeners\UpdateProductRating;
 use App\Listeners\UpdateProductSoldCount;
 use App\Listeners\SendOrderPaidMail;
 use App\Models\Order;
@@ -30,6 +32,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrderReviewed::class => [
             UpdateProductRating::class
+        ],
+        OrderRefundSuccess::class => [
+            SendRefundSuccessMail::class
         ]
     ];
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderRefundSuccess;
 use App\Events\OrderPaid;
 use Endroid\QrCode\QrCode;
 use App\Models\Order;
@@ -137,6 +138,7 @@ class PaymentController extends Controller
             $order->update([
                 'refund_status' => Order::REFUND_STATUS_SUCCESS
             ]);
+            $this->afterOrderRefund($order);
         } else {
             // 退款失败，将具体状态存入 extra 字段，并表退款状态改成失败
             $extra = $order->extra;
@@ -147,5 +149,11 @@ class PaymentController extends Controller
             ]);
         }
         return app('wechat_pay')->success();
+    }
+
+    // 退款成功事件
+    public function afterOrderRefund(Order $order)
+    {
+        event(new OrderRefundSuccess($order));
     }
 }
