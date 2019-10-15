@@ -67,7 +67,9 @@ MAIL_FROM_NAME=Pannio
 7. 初始化数据库，在项目根目录执行：
 > php artisan migrate
 > mysql -h 0.0.0.0 -P 3306 -uroot -p shop-test < database/admin.sql
+
 接下来会让你输入 **数据库密码** ，正确即可导入数据。
+
 **参数含义**
 * `-h` 和 `-P` 分别是是通过命令 `docker-compose ps` 查询出来的 `mysql` 在主机中映射的**IP**和**端口**信息。
 * `shop-test` 是将被导入数据的数据库名称。
