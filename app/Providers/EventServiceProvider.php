@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\OrderRefundSuccess;
 use App\Events\OrderReviewed;
 use App\Events\OrderPaid;
+use App\Listeners\UpdateCrowdfundingProductProgress;
 use App\Listeners\SendRefundSuccessMail;
 use App\Listeners\UpdateProductRating;
 use App\Listeners\UpdateProductSoldCount;
@@ -29,6 +30,7 @@ class EventServiceProvider extends ServiceProvider
         OrderPaid::class => [
             UpdateProductSoldCount::class,
             SendOrderPaidMail::class,
+            UpdateCrowdfundingProductProgress::class,
         ],
         OrderReviewed::class => [
             UpdateProductRating::class
