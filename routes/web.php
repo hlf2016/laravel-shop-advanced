@@ -42,6 +42,8 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::delete('cart/{sku}', 'CartController@remove')->name('cart.remove');
     // 添加订单
     Route::post('orders', 'OrdersController@store')->name('orders.store');
+    // 下众筹类订单
+    Route::post('crowdfunding_orders', 'OrdersController@crowdfunding')->name('crowdfunding_orders.store');
     // 订单列表
     Route::get('orders', 'OrdersController@index')->name('orders.index');
     // 订单详情

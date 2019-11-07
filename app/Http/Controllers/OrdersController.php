@@ -14,6 +14,8 @@ use App\Models\UserAddress;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
+use App\Http\Requests\CrowdFundingOrderRequest;
+use App\Models\ProductSku;
 
 class OrdersController extends Controller
 {
@@ -54,7 +56,18 @@ class OrdersController extends Controller
         return $orderService->store($user, $address, $request->input('remark'), $request->input('items'), $coupon);
     }
 
-    // 收获
+    // 众筹商品下单接口
+    public function crowdfunding(CrowdFundingOrderRequest $request, OrderService $orderService)
+    {
+        $user = $request->user();
+        $sku = ProductSku::find($request->input('sku_id'));
+        $address = UserAddress::find($request->input('address_id'));
+        $amount = $request->input('amount');
+
+        return $orderService->crowdfunding($user, $address, $sku,$amount);
+    }
+
+    // 收货
     public function received(Order $order, Request $request)
     {
         // 校验权限

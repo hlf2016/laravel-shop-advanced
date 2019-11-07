@@ -17,10 +17,12 @@ class UserAddress extends Model
         'last_used_at'
     ];
 
+    protected $appends = ['full_address'];
+
     // 表示last_used_at是一个时间日期类型的字段，$address->last_used_at 返回的是一个时间日期类型的对象，也就是一个Carbon对象
     protected $dates = ['last_used_at'];
 
-    // User 模型关联，关联关系是一对多（一个 User 可以有多个 UserAddress，一个 UserAddress 只能属于一个 User）
+    // User 模型关联，关联关系是一 对多（一个 User 可以有多个 UserAddress，一个 UserAddress 只能属于一个 User）
     public function user()
     {
         return $this->belongsTo(User::class);
