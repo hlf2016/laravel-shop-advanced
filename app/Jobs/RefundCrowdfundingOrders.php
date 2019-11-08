@@ -46,9 +46,9 @@ class RefundCrowdfundingOrders implements ShouldQueue
             ->where('type', Order::TYPE_CROWDFUNDING)
             // 已支付的订单
             ->whereNotNull('paid_at')
-            ->whereHas('items', function ($query) use ($crowdfunding) {
+            ->whereHas('items', function ($query) {
                 // 包含了当前商品
-                $query->where('product_id', $crowdfunding->product_id);
+                $query->where('product_id', $this->crowdfunding->product_id);
             })
             ->get()
             ->each(function (Order $order) use ($orderService) {
