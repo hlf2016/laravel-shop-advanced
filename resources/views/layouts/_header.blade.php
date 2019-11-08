@@ -55,6 +55,7 @@
                             <a class="dropdown-item" href="{{ route('orders.index') }}">
                                 订单中心
                             </a>
+                            <a href="{{ route('installments.index') }}" class="dropdown-item">分期付款</a>
                             <a class="dropdown-item" id="logout" href="#"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 <form id="logout-form" method="POST" action="{{ route('logout') }}"
