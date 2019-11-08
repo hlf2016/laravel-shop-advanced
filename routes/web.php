@@ -70,6 +70,8 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::get('coupon_codes/{code}', 'CouponCodesController@show')->name('coupon_codes.show');
     // 分期付款列表
     Route::get('installments', 'InstallmentsController@index')->name('installments.index');
+    // 分期付款详情页
+    Route::get('installments/{installment}', 'InstallmentsController@show')->name('installments.show');
 });
 // 支付宝后端回调
 // 服务器端回调的路由不能放到带有 auth 中间件的路由组中，因为支付宝的服务器请求不会带有认证信息。
