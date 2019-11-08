@@ -24,8 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // 注：Laravel 5.5 版本起，我们不再需要手动去注册 Artisan 命令，Laravel 会自动扫描 app/Console/Commands/ 目录下的代码并加载。
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command("cron:finish-crowdfunding")->everyMinute();
     }
 
     /**
