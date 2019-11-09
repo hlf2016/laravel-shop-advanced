@@ -76,6 +76,8 @@ Route::group(['middleware'=>['auth', 'verified']], function(){
     Route::get('installments/{installment}/alipay', 'InstallmentsController@payByAlipay')->name('installments.alipay');
     // 支付宝分期支付前端回调
     Route::get('installment/alipay/return', 'InstallmentsController@alipayReturn')->name('installments.alipay.return');
+    // 微信分期付款逻辑
+    Route::get('installments/{installment}/wechat', 'InstallmentsController@payByWechat')->name('installments.wechat');
 });
 // 服务器端回调的路由不能放到带有 auth 中间件的路由组中，因为支付宝的服务器请求不会带有认证信息。
 Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('payment.alipay.notify');
@@ -83,3 +85,5 @@ Route::post('payment/alipay/notify', 'PaymentController@alipayNotify')->name('pa
 Route::post('installments/alipay/notify', 'InstallmentsController@alipayNotify')->name('installments.alipay.notify');
 // 微信支付回调
 Route::post('payment/wechat/notify', 'PaymentController@wechatNotify')->name('payment.wechat.notify');
+// 微信分期付款回调
+Route::post('installments/wechat/notify', 'InstallmentsController@wechatNotify')->name('installments.wechat.notify');
