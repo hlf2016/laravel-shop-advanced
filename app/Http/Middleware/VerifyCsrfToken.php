@@ -22,6 +22,7 @@ class VerifyCsrfToken extends Middleware
         // 如果访问的 URL 能够匹配上 $except 里任意一项，Laravel 就不会去检查 CSRF Token
         'payment/alipay/notify',
         'payment/wechat/notify',
-        'payment/wechat/refund_notify'
+        'payment/wechat/refund_notify',
+        'installments/alipay/notify',
     ];
 }
