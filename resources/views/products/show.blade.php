@@ -116,8 +116,20 @@
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="product-detail-tab">
-                                <!-- 需要原样输出而不需要进行 Html 转义。 -->
-                                {!! $product->description !!}
+                                <!-- 产品属性开始 -->
+                                <div class="properties-list">
+                                    <div class="properties-list-title">产品参数：</div>
+                                    <ul class="properties-list-body">
+                                        @foreach($product->grouped_properties as $name => $value)
+                                            <li>{{ $name }}：{{ join(' ', $value) }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <!-- 产品属性结束 -->
+                                <div class="product-description">
+                                    <!-- 需要原样输出而不需要进行 Html 转义。 -->
+                                    {!! $product->description !!}
+                                </div>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="product-reviews-tab">
                                 <!-- 评论列表开始 -->
