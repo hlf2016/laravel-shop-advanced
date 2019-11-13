@@ -6,4 +6,4 @@
 	url = https://github.com/Laradock/laradock.git
 [submodule "shopdock"]
 	path = shopdock
-	url = https://github.com/Laradock/laradock.git
+	url = git@github.com:hlf2016/shopdock.git
