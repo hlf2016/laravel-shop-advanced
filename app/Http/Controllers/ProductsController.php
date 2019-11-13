@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ProductService;
 use App\SearchBuilders\ProductSearchBuilder;
 use App\Models\OrderItem;
 use App\Exceptions\InvalidRequestException;
@@ -130,9 +131,7 @@ class ProductsController extends Controller
         $productIds = collect($result['hits']['hits'])->pluck('_id')->all();
         // 通过 whereIn 方法从数据库中读取商品数据
         $products = Product::query()
-            ->whereIn('id', $productIds)
-            // orderByRaw 可以让我们用原生的 SQL 来给查询结果排序
-            ->orderByRaw(sprintf("FIND_IN_SET(id, '%s')", join(',', $productIds)))
+            ->byIds($productIds)
             ->get();
         // 返回一个 LengthAwarePaginator 对象
         $pager = new LengthAwarePaginator($products, $result['hits']['total'], $perPage, $page, [
@@ -171,7 +170,7 @@ class ProductsController extends Controller
 
 
     // 详情
-    public function show(Product $product, Request $request)
+    public function show(Product $product, Request $request, ProductService $service)
     {
         // 判断商品是否已经已经上架 否则抛出异常
         if (!$product->on_sale) {
@@ -186,6 +185,12 @@ class ProductsController extends Controller
             $favored = boolval($user->favoriteProducts()->find($product->id));
         }
 
+        $similarProductIds = $service->getSimilarProductIds($product, 4);
+        // 根据 Elasticsearch 搜索出来的商品 ID 从数据库中读取商品数据
+        $similarProducts   = Product::query()
+            ->byIds($similarProductIds)
+            ->get();
+
         $reviews = OrderItem::query()
             ->with(['order.user', 'productSku'])
             ->where('product_id', $product->id)
@@ -193,7 +198,7 @@ class ProductsController extends Controller
             ->orderBy('reviewed_at', 'desc')
             ->limit(10)
             ->get();
-        return view('products.show', ['product' => $product, 'favored' => $favored, 'reviews' => $reviews]);
+        return view('products.show', ['product' => $product, 'favored' => $favored, 'reviews' => $reviews,'similar' => $similarProducts,]);
     }
 
     // 收藏
